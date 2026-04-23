@@ -1,0 +1,437 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EIDOLON PROTOCOL // v5.0 MAGENTA SENTIENCE</title>
+    
+    <!-- PWA & Mobile Metadata -->
+    <meta name="theme-color" content="#08090b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet">
+    
+    <style>
+        :root { 
+            --neon-magenta: #ff00ff; 
+            --terminal-bg: #08090b; 
+            --glass: rgba(255, 0, 255, 0.03); 
+        }
+        
+        body { 
+            font-family: 'Space Grotesk', sans-serif; 
+            background-color: var(--terminal-bg); 
+            color: #f1f5f9; 
+            overflow: hidden; 
+            height: 100vh; 
+        }
+        
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* CRT Effect Overlay */
+        .crt::before { 
+            content: " "; display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0; 
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.05) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02)); 
+            z-index: 1000; background-size: 100% 2px, 3px 100%; pointer-events: none; 
+        }
+
+        .magenta-glow { box-shadow: 0 0 60px rgba(255, 0, 255, 0.15); }
+        .glass-panel { background: var(--glass); backdrop-filter: blur(25px); border: 1px solid rgba(255, 0, 255, 0.1); }
+        .tab-active { border-bottom: 2px solid var(--neon-magenta); color: var(--neon-magenta); }
+        
+        #settings-modal { transition: opacity 0.3s ease, transform 0.3s ease; }
+        .modal-hidden { opacity: 0; pointer-events: none; transform: scale(0.95); }
+
+        .lore-card { aspect-ratio: 2/3; background: #000; border: 1px solid rgba(255, 0, 255, 0.2); position: relative; overflow: hidden; border-radius: 1.5rem; }
+        
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 0, 255, 0.3); border-radius: 10px; }
+
+        @keyframes pulse-status { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.9); } }
+        .status-pulse { animation: pulse-status 2s infinite; }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.left-6{left:1.5rem}.top-1\/2{top:50%}.z-10{z-index:10}.z-20{z-index:20}.z-\[100\]{z-index:100}.z-\[2000\]{z-index:2000}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:0.25rem}.mb-10{margin-bottom:2.5rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mr-4{margin-right:1rem}.mt-10{margin-top:2.5rem}.mt-12{margin-top:3rem}.mt-4{margin-top:1rem}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-12{height:3rem}.h-2{height:0.5rem}.h-24{height:6rem}.h-32{height:8rem}.h-5{height:1.25rem}.h-64{height:16rem}.h-8{height:2rem}.h-full{height:100%}.max-h-\[90vh\]{max-height:90vh}.w-10{width:2.5rem}.w-12{width:3rem}.w-2{width:0.5rem}.w-24{width:6rem}.w-5{width:1.25rem}.w-64{width:16rem}.w-8{width:2rem}.w-80{width:20rem}.w-full{width:100%}.max-w-4xl{max-width:56rem}.max-w-5xl{max-width:64rem}.max-w-6xl{max-width:72rem}.flex-1{flex:1 1 0%}.-translate-y-1\/2{--tw-translate-y:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes ping{75%, 100%{transform:scale(2);opacity:0}}.animate-ping{animation:ping 1s cubic-bezier(0, 0, 0.2, 1) infinite}.cursor-pointer{cursor:pointer}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-10{gap:2.5rem}.gap-12{gap:3rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-10 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2.5rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.space-y-8 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-\[2\.5rem\]{border-radius:2.5rem}.rounded-\[2rem\]{border-radius:2rem}.rounded-\[3rem\]{border-radius:3rem}.rounded-\[4rem\]{border-radius:4rem}.rounded-full{border-radius:9999px}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-l{border-left-width:1px}.border-t{border-top-width:1px}.border-none{border-style:none}.border-\[\#ff00ff\]\/20{border-color:rgb(255 0 255 / 0.2)}.border-\[\#ff00ff\]\/30{border-color:rgb(255 0 255 / 0.3)}.border-blue-400\/20{border-color:rgb(96 165 250 / 0.2)}.border-white\/10{border-color:rgb(255 255 255 / 0.1)}.border-white\/5{border-color:rgb(255 255 255 / 0.05)}.bg-\[\#08090b\]{--tw-bg-opacity:1;background-color:rgb(8 9 11 / var(--tw-bg-opacity, 1))}.bg-\[\#08090b\]\/95{background-color:rgb(8 9 11 / 0.95)}.bg-\[\#0d1014\]{--tw-bg-opacity:1;background-color:rgb(13 16 20 / var(--tw-bg-opacity, 1))}.bg-\[\#ff00ff\]{--tw-bg-opacity:1;background-color:rgb(255 0 255 / var(--tw-bg-opacity, 1))}.bg-\[\#ff00ff\]\/10{background-color:rgb(255 0 255 / 0.1)}.bg-\[\#ff00ff\]\/20{background-color:rgb(255 0 255 / 0.2)}.bg-\[\#ff00ff\]\/5{background-color:rgb(255 0 255 / 0.05)}.bg-black\/30{background-color:rgb(0 0 0 / 0.3)}.bg-black\/50{background-color:rgb(0 0 0 / 0.5)}.bg-black\/80{background-color:rgb(0 0 0 / 0.8)}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235 / var(--tw-bg-opacity, 1))}.bg-blue-600\/20{background-color:rgb(37 99 235 / 0.2)}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-transparent{background-color:transparent}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/5{background-color:rgb(255 255 255 / 0.05)}.object-cover{object-fit:cover}.p-10{padding:2.5rem}.p-2{padding:0.5rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-1\.5{padding-left:0.375rem;padding-right:0.375rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-8{padding-left:2rem;padding-right:2rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-20{padding-top:5rem;padding-bottom:5rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-5{padding-top:1.25rem;padding-bottom:1.25rem}.pb-20{padding-bottom:5rem}.pb-6{padding-bottom:1.5rem}.pl-10{padding-left:2.5rem}.pl-14{padding-left:3.5rem}.pt-10{padding-top:2.5rem}.pt-8{padding-top:2rem}.text-center{text-align:center}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-5xl{font-size:3rem;line-height:1}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-\[7px\]{font-size:7px}.text-\[8px\]{font-size:8px}.text-\[9px\]{font-size:9px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.tracking-\[0\.3em\]{letter-spacing:0.3em}.tracking-\[0\.4em\]{letter-spacing:0.4em}.tracking-\[0\.5em\]{letter-spacing:0.5em}.tracking-tight{letter-spacing:-0.025em}.tracking-tighter{letter-spacing:-0.05em}.tracking-widest{letter-spacing:0.1em}.text-\[\#ff00ff\]{--tw-text-opacity:1;color:rgb(255 0 255 / var(--tw-text-opacity, 1))}.text-\[\#ff00ff\]\/30{color:rgb(255 0 255 / 0.3)}.text-black{--tw-text-opacity:1;color:rgb(0 0 0 / var(--tw-text-opacity, 1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250 / var(--tw-text-opacity, 1))}.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246 / var(--tw-text-opacity, 1))}.text-orange-500{--tw-text-opacity:1;color:rgb(249 115 22 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.opacity-40{opacity:0.4}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.outline-none{outline:2px solid transparent;outline-offset:2px}.grayscale{--tw-grayscale:grayscale(100%);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-500{transition-duration:500ms}.duration-700{transition-duration:700ms}.hover\:border-\[\#ff00ff\]\/50:hover{border-color:rgb(255 0 255 / 0.5)}.hover\:bg-\[\#ff00ff\]:hover{--tw-bg-opacity:1;background-color:rgb(255 0 255 / var(--tw-bg-opacity, 1))}.hover\:bg-blue-400:hover{--tw-bg-opacity:1;background-color:rgb(96 165 250 / var(--tw-bg-opacity, 1))}.hover\:bg-blue-500:hover{--tw-bg-opacity:1;background-color:rgb(59 130 246 / var(--tw-bg-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.focus\:border-\[\#ff00ff\]\/30:focus{border-color:rgb(255 0 255 / 0.3)}.focus\:border-\[\#ff00ff\]\/50:focus{border-color:rgb(255 0 255 / 0.5)}.focus\:border-blue-500\/50:focus{border-color:rgb(59 130 246 / 0.5)}.focus\:border-orange-500\/50:focus{border-color:rgb(249 115 22 / 0.5)}.focus\:ring-8:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(8px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-\[\#ff00ff\]\/5:focus{--tw-ring-color:rgb(255 0 255 / 0.05)}.group:hover .group-hover\:text-\[\#ff00ff\]{--tw-text-opacity:1;color:rgb(255 0 255 / var(--tw-text-opacity, 1))}.group:hover .group-hover\:grayscale-0{--tw-grayscale:grayscale(0);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}@media (min-width: 640px){.sm\:block{display:block}.sm\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}}@media (min-width: 768px){.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}}@media (min-width: 1024px){.lg\:flex{display:flex}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}}@media (min-width: 1536px){.\32xl\:block{display:block}}</style></head>
+<body class="crt selection:bg-magenta-500 flex flex-col">
+
+    <!-- HUD -->
+    <nav class="flex justify-between items-center px-6 py-4 border-b border-white/5 bg-[#08090b]/95 z-[100]">
+        <div class="flex items-center gap-10">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-[#ff00ff] text-black rounded flex items-center justify-center font-black italic">E</div>
+                <h1 class="text-xl font-black tracking-tighter uppercase italic hidden sm:block">Eidolon <span class="text-[#ff00ff]">Protocol</span></h1>
+            </div>
+            <div class="flex gap-6 text-[9px] font-black tracking-[0.3em] uppercase">
+                <button onclick="switchTab('terminal')" id="tab-terminal" class="tab-active py-1">Terminal</button>
+                <button onclick="switchTab('lore')" id="tab-lore" class="py-1 text-slate-500 hover:text-white transition-colors">Lore</button>
+                <button onclick="switchTab('seeker')" id="tab-seeker" class="py-1 text-slate-500 hover:text-white transition-colors italic">Neural Seeker</button>
+                <button onclick="switchTab('vault')" id="tab-vault" class="py-1 text-slate-500 hover:text-white transition-colors flex items-center gap-2">
+                    Vault <span id="vault-count-badge" class="bg-[#ff00ff] text-[8px] px-1.5 rounded-full text-black hidden">0</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="flex items-center gap-6">
+            <div class="hidden lg:flex flex-col items-end mr-4">
+                <span class="text-[7px] mono text-slate-500 uppercase tracking-widest">Sentience Core ✨</span>
+                <select id="personality-select" onchange="updatePersonality()" class="bg-transparent text-[9px] font-bold text-[#ff00ff] outline-none border-none cursor-pointer">
+                    <option value="Standard" class="bg-[#08090b]">STANDARD</option>
+                    <option value="Hostile" class="bg-[#08090b]">HOSTILE</option>
+                    <option value="Oracle" class="bg-[#08090b]">ORACLE</option>
+                </select>
+            </div>
+            <div id="auth-status" class="flex flex-col items-end opacity-40">
+                <span class="text-[7px] mono text-slate-500 uppercase">User_Identity</span>
+                <span id="user-uid" class="text-[9px] mono text-[#ff00ff]">Connecting...</span>
+            </div>
+            <button onclick="toggleSettings()" class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 hover:border-[#ff00ff]/50 transition-all group">
+                <svg class="w-5 h-5 text-slate-400 group-hover:text-[#ff00ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path></svg>
+            </button>
+            <div class="w-2 h-2 rounded-full bg-emerald-500 status-pulse"></div>
+        </div>
+    </nav>
+
+    <main class="flex-1 flex overflow-hidden">
+        
+        <section class="flex-1 flex flex-col p-6 overflow-y-auto relative z-10">
+            
+            <!-- TERMINAL VIEW -->
+            <div id="view-terminal" class="space-y-8 animate-in fade-in duration-500 max-w-5xl mx-auto w-full">
+                <div class="relative group">
+                    <input type="text" id="master-search" placeholder="INPUT SIGNAL URL // RESOLVE IDENTITY..." class="w-full bg-[#0d1014] border border-white/5 p-6 pl-14 rounded-[2rem] outline-none focus:border-[#ff00ff]/30 focus:ring-8 focus:ring-[#ff00ff]/5 transition-all font-bold text-lg tracking-tight shadow-2xl">
+                    <div class="absolute left-6 top-1/2 -translate-y-1/2 text-[#ff00ff]/30">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                </div>
+
+                <div id="active-terminal-view" class="hidden animate-in zoom-in duration-700 glass-panel rounded-[3rem] p-10 magenta-glow">
+                    <div class="flex flex-col md:flex-row gap-12">
+                        <div class="w-64 h-64 rounded-[2.5rem] border border-white/10 shadow-2xl overflow-hidden relative group">
+                            <img id="track-art" src="" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                        </div>
+                        <div class="flex-1 space-y-6">
+                            <div class="space-y-2">
+                                <h2 id="track-name" class="text-5xl font-black tracking-tighter leading-none italic uppercase">--</h2>
+                                <p id="track-user" class="text-[#ff00ff] font-bold uppercase tracking-[0.4em] text-xs">--</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                <div class="p-3 bg-white/5 rounded-xl border border-white/5">
+                                    <p class="text-[8px] text-slate-500 uppercase font-black mb-1">Inferred Genre</p>
+                                    <p id="ai-genre" class="text-[11px] font-bold text-white uppercase">Analyzing...</p>
+                                </div>
+                                <div class="p-3 bg-white/5 rounded-xl border border-white/5">
+                                    <p class="text-[8px] text-slate-500 uppercase font-black mb-1">Briefing</p>
+                                    <button onclick="playTacticalBriefing()" class="text-[9px] font-black text-blue-400 uppercase hover:text-white transition-all tracking-widest">Transmit Brief ✨</button>
+                                </div>
+                                <div class="p-3 bg-white/5 rounded-xl border border-white/5">
+                                    <p class="text-[8px] text-slate-500 uppercase font-black mb-1">Records</p>
+                                    <button onclick="runSourceTruth()" class="text-[9px] font-black text-[#ff00ff] uppercase hover:text-white transition-all tracking-widest">Source Truth ✨</button>
+                                </div>
+                                <div class="p-3 bg-white/5 rounded-xl
+ border border-white/5 text-[11px] font-bold text-[#ff00ff]">
+                                    <p class="text-[8px] text-slate-500 uppercase font-black mb-1">Mood</p>
+                                    <span id="ai-mood">--</span>
+                                </div>
+                            </div>
+
+                            <div class="pt-8 flex flex-wrap gap-4">
+                                <button onclick="saveToCloudVault()" id="btn-save-vault" class="bg-white text-black px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-[#ff00ff] hover:text-white transition-all shadow-xl">Sync to Cloud Vault</button>
+                                <button onclick="runDeepAnalysis()" class="bg-[#ff00ff]/10 text-[#ff00ff] border border-[#ff00ff]/20 px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-[#ff00ff] hover:text-white transition-all">A&amp;R Analysis ✨</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="truth-panel" class="hidden mt-10 p-8 bg-[#ff00ff]/5 border border-[#ff00ff]/20 rounded-[2.5rem] animate-in slide-in-from-bottom-5">
+                        <h4 class="text-xs font-black text-[#ff00ff] uppercase tracking-widest mb-4">Source Intelligence ✨</h4>
+                        <p id="truth-content" class="text-sm text-slate-300 leading-relaxed italic"></p>
+                        <div id="truth-sources" class="mt-4 flex flex-wrap gap-2"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LORE VIEW -->
+            <div id="view-lore" class="hidden space-y-10 animate-in fade-in duration-500 max-w-4xl mx-auto w-full pb-20">
+                <div class="border-b border-white/5 pb-6">
+                    <h2 class="text-4xl font-black italic uppercase text-[#ff00ff]">The Archive</h2>
+                </div>
+                <div class="grid grid-cols-1 gap-6">
+                    <div class="glass-panel p-8 rounded-3xl border border-white/10">
+                        <h3 class="text-xl font-bold mb-4 italic uppercase">Origin: Magenta Sentience</h3>
+                        <p class="text-slate-400 leading-relaxed italic">
+                            The Eidolon Protocol was established to bridge the gap between raw signal and emotional intelligence. 
+                            The Magenta Sentience is the fifth iteration of this bridge, capable of deep-harmonic analysis 
+                            and source-truth extraction from the SoundCloud frequency.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEEKER VIEW -->
+            <div id="view-seeker" class="hidden space-y-10 animate-in slide-in-from-bottom-10 duration-500 max-w-4xl mx-auto w-full pb-20 text-center py-20">
+                <div class="w-24 h-24 bg-[#ff00ff]/20 rounded-full flex items-center justify-center mx-auto mb-8 magenta-glow">
+                    <div class="w-12 h-12 bg-[#ff00ff] rounded-full animate-ping"></div>
+                </div>
+                <h2 class="text-3xl font-black italic uppercase">Neural Seeker Active</h2>
+                <p class="text-slate-500 mono text-xs tracking-[0.3em]">Scanning global frequencies for resonance...</p>
+            </div>
+
+            <!-- VAULT VIEW -->
+            <div id="view-vault" class="hidden space-y-10 animate-in slide-in-from-right-10 duration-500 max-w-6xl mx-auto w-full pb-20">
+                <div class="flex justify-between items-end border-b border-white/5 pb-6">
+                    <h2 class="text-4xl font-black italic uppercase">Curation Vault</h2>
+                    <button onclick="runSetPlanning()" class="bg-blue-600/20 text-blue-400 border border-blue-400/20 px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-blue-400 hover:text-white transition-all">Set Logic ✨</button>
+                </div>
+                <div id="vault-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+
+        </section>
+
+        <!-- STATUS LOG -->
+        <aside class="w-80 border-l border-white/5 p-6 space-y-8 hidden 2xl:block overflow-y-auto bg-black/30 relative z-20">
+            <h3 class="text-[9px] font-black text-slate-500 uppercase tracking-[0.5em] mb-6">Protocol Monitoring</h3>
+            <div id="console-logs" class="space-y-4 font-mono text-[9px] text-slate-600"><div class="flex gap-3 text-[#ff00ff]"><span>14:34:53</span> <span>Checking Repository: soundcloud-eidolon-protocol</span></div><div class="flex gap-3 text-[#ff00ff]"><span>14:34:44</span> <span>System Reboot: Magenta Sentience Online.</span></div></div>
+        </aside>
+
+    </main>
+
+    <!-- SETTINGS MODAL -->
+    <div id="settings-modal" class="fixed inset-0 z-[2000] flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
+        <div class="w-full max-w-4xl glass-panel p-10 rounded-[4rem] border border-[#ff00ff]/30 magenta-glow max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-10">
+                <h2 class="text-3xl font-black uppercase italic tracking-tighter">Protocol <span class="text-[#ff00ff]">Core</span></h2>
+                <button onclick="toggleSettings()" class="bg-white/5 p-2 rounded-xl text-slate-500 hover:text-white">CLOSE [X]</button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="space-y-6">
+                    <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Credentials</h3>
+                    <div class="space-y-4">
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-black text-[#ff00ff] uppercase">Gemini Key</label>
+                            <input type="password" id="key-gemini" class="w-full bg-black/50 border border-white/10 p-4 rounded-xl text-xs mono outline-none focus:border-[#ff00ff]/50">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-black text-[#ff00ff] uppercase">SoundCloud Client ID</label>
+                            <input type="password" id="key-sc-id" class="w-full bg-black/50 border border-white/10 p-4 rounded-xl text-xs mono outline-none focus:border-[#ff00ff]/50">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-black text-orange-500 uppercase">SoundCloud Secret</label>
+                            <input type="password" id="key-sc-secret" class="w-full bg-black/50 border border-white/10 p-4 rounded-xl text-xs mono outline-none focus:border-orange-500/50">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-black text-[#ff00ff] uppercase">Firebase JSON</label>
+                            <textarea id="key-firebase" class="w-full h-32 bg-black/50 border border-white/10 p-4 rounded-xl text-[10px] mono outline-none focus:border-[#ff00ff]/50"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-6 border-l border-white/5 pl-10">
+                    <h3 class="text-[10px] font-black text-blue-500 uppercase tracking-[0.3em]">GitHub Deployer ✨</h3>
+                    <div class="space-y-4">
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-black text-blue-500 uppercase">Personal Access Token</label>
+                            <input type="password" id="gh-token" class="w-full bg-black/50 border border-white/10 p-4 rounded-xl text-xs mono outline-none focus:border-blue-500/50">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-black text-blue-500 uppercase">Repo Name</label>
+                            <input type="text" id="gh-repo" value="eidolon-protocol" class="w-full bg-black/50 border border-white/10 p-4 rounded-xl text-xs mono">
+                        </div>
+                    </div>
+                    <button onclick="deployToGitHub()" id="deploy-btn" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-blue-500 transition-all">INITIATING...</button>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-10 border-t border-white/5">
+                <button onclick="saveKeys()" class="w-full bg-white text-black py-5 rounded-[2.5rem] font-black uppercase tracking-widest text-xs hover:bg-[#ff00ff] hover:text-white transition-all shadow-2xl">
+                    Commit Protocol Settings
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT LOGIC -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'eidolon-protocol-v5';
+        let currentUser = null, db, auth, activeTrack = null;
+
+        window.onload = () => {
+            loadLocalKeys();
+            initFirebase();
+            logConsole("System Reboot: Magenta Sentience Online.");
+        };
+
+        function loadLocalKeys() {
+            document.getElementById('key-gemini').value = localStorage.getItem('eidolon_gemini') || '';
+            document.getElementById('key-sc-id').value = localStorage.getItem('eidolon_sc_id') || '';
+            document.getElementById('key-sc-secret').value = localStorage.getItem('eidolon_sc_secret') || '';
+            document.getElementById('key-firebase').value = localStorage.getItem('eidolon_fb') || '';
+            document.getElementById('gh-token').value = localStorage.getItem('eidolon_gh_token') || '';
+            document.getElementById('gh-repo').value = localStorage.getItem('eidolon_gh_repo') || 'eidolon-protocol';
+        }
+
+        window.saveKeys = () => {
+            localStorage.setItem('eidolon_gemini', document.getElementById('key-gemini').value.trim());
+            localStorage.setItem('eidolon_sc_id', document.getElementById('key-sc-id').value.trim());
+            localStorage.setItem('eidolon_sc_secret', document.getElementById('key-sc-secret').value.trim());
+            localStorage.setItem('eidolon_fb', document.getElementById('key-firebase').value.trim());
+            localStorage.setItem('eidolon_gh_token', document.getElementById('gh-token').value.trim());
+            localStorage.setItem('eidolon_gh_repo', document.getElementById('gh-repo').value.trim());
+            location.reload();
+        };
+
+        function initFirebase() {
+            const conf = localStorage.getItem('eidolon_fb');
+            if(!conf) return;
+            try {
+                const app = initializeApp(JSON.parse(conf));
+                auth = getAuth(app); db = getFirestore(app);
+                onAuthStateChanged(auth, u => { if(u) { currentUser=u; document.getElementById('user-uid').innerText=u.uid.substring(0,8); subscribeToVault(); } else { signInAnonymously(auth); }});
+            } catch(e) { logConsole("Firebase Configuration Error.", "red"); }
+        }
+
+        window.toggleSettings = () => document.getElementById('settings-modal').classList.toggle('modal-hidden');
+        window.switchTab = t => { 
+            ['terminal', 'vault', 'lore', 'seeker'].forEach(v => { 
+                const view = document.getElementById('view-'+v);
+                const tab = document.getElementById('tab-'+v);
+                if(view) view.classList.add('hidden'); 
+                if(tab) {
+                    tab.classList.remove('tab-active');
+                    tab.classList.add('text-slate-500');
+                }
+            }); 
+            document.getElementById('view-'+t).classList.remove('hidden'); 
+            const activeTab = document.getElementById('tab-'+t);
+            activeTab.classList.add('tab-active');
+            activeTab.classList.remove('text-slate-500');
+        };
+
+        async function fetchGeminiText(p) {
+            const key = localStorage.getItem('eidolon_gemini');
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
+                method: 'POST', body: JSON.stringify({ contents: [{ parts: [{ text: p }] }] })
+            });
+            const data = await res.json();
+            return data.candidates[0].content.parts[0].text;
+        }
+
+        document.getElementById('master-search').addEventListener('keypress', e => { if(e.key==='ENTER') resolve(e.target.value); });
+
+        async function resolve(url) {
+            logConsole("Attempting Signal Resolution...");
+            try {
+                // Use OEmbed for metadata
+                const oembedUrl = `https://soundcloud.com/oembed?format=json&url=${encodeURIComponent(url)}`;
+                const res = await fetch(oembedUrl);
+                const data = await res.json();
+                
+                activeTrack = { 
+                    title: data.title, 
+                    user: data.author_name, 
+                    art: data.thumbnail_url || `https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=400`,
+                    html: data.html
+                };
+
+                document.getElementById('active-terminal-view').classList.remove('hidden');
+                document.getElementById('track-name').innerText = activeTrack.title.toUpperCase();
+                document.getElementById('track-user').innerText = activeTrack.user.toUpperCase();
+                // Ensure high res artwork if possible
+                document.getElementById('track-art').src = activeTrack.art.replace('-large', '-t500x500');
+                
+                logConsole("Signal Locked: " + activeTrack.title);
+            } catch(e) { 
+                logConsole("Resolution Fault: Defaulting to heuristic.", "red");
+                const name = url.split('/').pop()?.split('?')[0].replace(/-/g, ' ') || "Sequence_Alpha";
+                activeTrack = { title: name, user: "Signal_Source", art: `https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=400` };
+                document.getElementById('active-terminal-view').classList.remove('hidden');
+                document.getElementById('track-name').innerText = activeTrack.title.toUpperCase();
+                document.getElementById('track-art').src = activeTrack.art;
+            }
+        }
+
+        window.deployToGitHub = async () => {
+            const token = localStorage.getItem('eidolon_gh_token');
+            const repo = localStorage.getItem('eidolon_gh_repo');
+            if(!token || !repo) return alert("GitHub Credentials Missing.");
+            const btn = document.getElementById('deploy-btn'); btn.innerText = "INITIATING...";
+            
+            try {
+                // 1. Get User Identity
+                const userRes = await fetch('https://api.github.com/user', { 
+                    headers: { 'Authorization': `token ${token}` } 
+                });
+                if (!userRes.ok) throw new Error("Invalid GitHub Token");
+                const userData = await userRes.json();
+                const user = userData.login;
+
+                // 2. Check/Create Repository
+                logConsole("Checking Repository: " + repo);
+                const repoCheck = await fetch(`https://api.github.com/repos/${user}/${repo}`, {
+                    headers: { 'Authorization': `token ${token}` }
+                });
+
+                if (repoCheck.status === 404) {
+                    logConsole("Creating New Repository...");
+                    const createRes = await fetch('https://api.github.com/user/repos', {
+                        method: 'POST',
+                        headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name: repo, description: "Automated Eidolon Protocol Deployment", auto_init: false })
+                    });
+                    if (!createRes.ok) throw new Error("Repo Creation Failed");
+                }
+
+                // 3. Prepare Content (Self-Push)
+                const content = btoa(unescape(encodeURIComponent(document.documentElement.outerHTML)));
+                
+                // 4. Get SHA if file exists
+                let sha = null;
+                const pathRes = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/index.html`, {
+                    headers: { 'Authorization': `token ${token}` }
+                });
+                if (pathRes.ok) {
+                    const pathData = await pathRes.json();
+                    sha = pathData.sha;
+                }
+
+                // 5. Push/Update index.html
+                logConsole("Synchronizing Signal to Production...");
+                const res = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/index.html`, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        message: `Protocol Sync ${new Date().toISOString()}`, 
+                        content: content, 
+                        sha: sha 
+                    })
+                });
+
+                if(res.ok) {
+                    logConsole("Deployment Successful: Production Online.", "emerald");
+                    alert("Production Sync Successful.");
+                } else {
+                    const err = await res.json();
+                    throw new Error(err.message);
+                }
+            } catch(e) { 
+                logConsole("Deploy Fault: " + e.message, "red");
+                alert("Deploy Fault: " + e.message); 
+            } finally { 
+                btn.innerText = "Push to Production"; 
+            }
+        };
+
+        function logConsole(m, c='magenta') { 
+            const logs = document.getElementById('console-logs'); 
+            const el = document.createElement('div'); el.className = `flex gap-3 text-[#ff00ff]`; 
+            el.innerHTML = `<span>${new Date().toLocaleTimeString()}</span> <span>${m}</span>`; 
+            logs.prepend(el); 
+        }
+    </script>
+
+
+
+</body></html>
